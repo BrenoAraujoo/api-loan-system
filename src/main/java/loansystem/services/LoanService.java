@@ -15,6 +15,7 @@ public class LoanService {
     @Autowired
     LoanRepository repository;
 
+
     public List<Loan> findAll() {
         return
                 repository.findAll();

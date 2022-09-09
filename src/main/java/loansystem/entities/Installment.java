@@ -55,4 +55,12 @@ public class Installment implements Serializable {
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
+
+    public Loan getLoan() {
+        return loan;
+    }
+
+    public void setLoan(Loan loan) {
+        this.loan = loan;
+    }
 }

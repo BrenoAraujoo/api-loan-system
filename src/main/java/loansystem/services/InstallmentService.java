@@ -1,7 +1,9 @@
 package loansystem.services;
 
 import loansystem.entities.Installment;
+import loansystem.exceptions.ResourceNotFoundException;
 import loansystem.repositories.InstallmentRepository;
+import loansystem.repositories.LoanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +13,36 @@ import java.util.List;
 public class InstallmentService {
 
     @Autowired
-    InstallmentRepository repository;
+    InstallmentRepository installmentRepository;
+
+    @Autowired
+    LoanRepository loanRepository;
 
     public List<Installment> findAll(){
-        return
-              repository.findAll();
+        return installmentRepository.findAll();
+    }
+    public Installment findById(Long id){
+        return installmentRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Instalment not found " + id));
+    }
+
+    public Installment save(Installment installment){
+        if(installment == null) throw new ResourceNotFoundException("Loan not found: ");
+        return installmentRepository.save(installment);
+    }
+
+    public void delete(Long id){
+
+        var entity = installmentRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Installment not found: " + id));
+        installmentRepository.delete(entity);
+
+    }
+
+    public Installment update(Installment installment) {
+       if(installment == null) throw new ResourceNotFoundException("Installment not found: ");
+        installmentRepository.findById(installment.getId());
+        return installmentRepository.save(installment);
+
     }
 }
