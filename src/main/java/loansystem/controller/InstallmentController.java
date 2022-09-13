@@ -1,17 +1,15 @@
 package loansystem.controller;
 
-import jakarta.servlet.annotation.HttpConstraint;
-import jakarta.websocket.server.PathParam;
 import loansystem.entities.Installment;
+import loansystem.entities.dto.InstallmentDTO;
 import loansystem.services.InstallmentService;
 import loansystem.services.LoanService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,11 +23,11 @@ public class InstallmentController {
     @Autowired
     LoanService loanService;
 
+
     @GetMapping
-    public ResponseEntity<List<Installment>> findAll(){
+    public ResponseEntity<List<InstallmentDTO>> findAll(){
         return ResponseEntity.ok().body(installmentService.findAll());
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<Installment> findById(@PathVariable(value = "id") Long id){

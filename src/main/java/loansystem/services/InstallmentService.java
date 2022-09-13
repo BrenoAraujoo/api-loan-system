@@ -1,13 +1,16 @@
 package loansystem.services;
 
 import loansystem.entities.Installment;
+import loansystem.entities.dto.InstallmentDTO;
 import loansystem.exceptions.ResourceNotFoundException;
 import loansystem.repositories.InstallmentRepository;
 import loansystem.repositories.LoanRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class InstallmentService {
@@ -18,9 +21,16 @@ public class InstallmentService {
     @Autowired
     LoanRepository loanRepository;
 
-    public List<Installment> findAll(){
-        return installmentRepository.findAll();
+    @Autowired
+    ModelMapper modelMapper;
+
+    public List<InstallmentDTO> findAll(){
+        return installmentRepository.findAll()
+                .stream()
+                .map(this::toInstallmentDTO)
+                .collect(Collectors.toList());
     }
+
     public Installment findById(Long id){
         return installmentRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Instalment not found " + id));
@@ -48,5 +58,9 @@ public class InstallmentService {
         installmentRepository.findById(installment.getId());
         return installmentRepository.save(installment);
 
+    }
+
+    private InstallmentDTO toInstallmentDTO(Installment installment){
+        return modelMapper.map(installment,InstallmentDTO.class);
     }
 }

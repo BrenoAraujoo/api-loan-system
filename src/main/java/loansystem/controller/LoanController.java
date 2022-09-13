@@ -2,7 +2,6 @@ package loansystem.controller;
 
 import loansystem.entities.Loan;
 import loansystem.services.LoanService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +47,5 @@ public class LoanController {
             return ResponseEntity.ok().body(loan);
 
     }
-
 
 }

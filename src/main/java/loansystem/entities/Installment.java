@@ -1,5 +1,6 @@
 package loansystem.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -55,6 +56,7 @@ public class Installment implements Serializable {
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
     }
+
 
     public Loan getLoan() {
         return loan;
