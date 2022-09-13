@@ -1,13 +1,17 @@
 package loansystem.controller;
 
+import jakarta.servlet.annotation.HttpConstraint;
+import jakarta.websocket.server.PathParam;
 import loansystem.entities.Installment;
 import loansystem.services.InstallmentService;
 import loansystem.services.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,19 +30,18 @@ public class InstallmentController {
         return ResponseEntity.ok().body(installmentService.findAll());
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<Installment> findById(@PathVariable(value = "id") Long id){
         Installment installment  = installmentService.findById(id);
         return  ResponseEntity.ok().body(installment);
     }
 
-    @PostMapping
-    public ResponseEntity<?> save(@RequestBody Installment installment){
-
-        installmentService.save(installment);
-        return ResponseEntity.status(HttpStatus.CREATED).body(installment);
+        @PostMapping
+    public ResponseEntity<List<Installment>> saveAll(@RequestBody List<Installment> list) {
+        installmentService.saveAll(list);
+        return ResponseEntity.status(HttpStatus.CREATED).body(list);
     }
-
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> delete(@PathVariable(value = "id")Long id){
@@ -47,11 +50,9 @@ public class InstallmentController {
     }
 
     @PutMapping
-    public ResponseEntity<Installment> put(@RequestBody Installment loan){
-            installmentService.update(loan);
-            return ResponseEntity.ok().body(loan);
+    public ResponseEntity<Installment> put(@RequestBody Installment installment){
+            installmentService.update(installment);
+            return ResponseEntity.ok().body(installment);
 
     }
-
-
 }

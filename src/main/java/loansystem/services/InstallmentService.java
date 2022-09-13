@@ -31,6 +31,10 @@ public class InstallmentService {
         return installmentRepository.save(installment);
     }
 
+    public List<Installment> saveAll(List<Installment> list){
+        return installmentRepository.saveAll(list);
+    }
+
     public void delete(Long id){
 
         var entity = installmentRepository.findById(id)
